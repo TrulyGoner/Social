@@ -39,7 +39,8 @@ export interface UpdatePostData extends Partial<CreatePostData> {
 export interface PostFilters {
   platform?: Platform;
   status?: PostStatus;
-  dateFrom?: Date;
-  dateTo?: Date;
+  dateFrom?: string;
+  dateTo?: string;
   search?: string;
+  limit?: number;
 }

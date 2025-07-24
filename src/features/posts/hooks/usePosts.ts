@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../../store';
-import { 
-  createPost, 
-  updatePost, 
-  deletePost, 
+import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
+import {
+  createPost,
+  updatePost,
+  deletePost,
   fetchPosts,
   selectPosts,
   selectPostsLoading,
@@ -13,11 +12,11 @@ import {
 import { CreatePostData, UpdatePostData, PostFilters } from '../types/post.types';
 
 export const usePosts = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
-  const posts = useSelector(selectPosts);
-  const loading = useSelector(selectPostsLoading);
-  const error = useSelector(selectPostsError);
+  const posts = useAppSelector(selectPosts);
+  const loading = useAppSelector(selectPostsLoading);
+  const error = useAppSelector(selectPostsError);
 
   const createNewPost = useCallback((postData: CreatePostData) => {
     return dispatch(createPost(postData));
@@ -31,7 +30,7 @@ export const usePosts = () => {
     return dispatch(deletePost(postId));
   }, [dispatch]);
 
-  const loadPosts = useCallback((filters?: PostFilters) => {
+  const loadPosts = useCallback((filters: PostFilters = {}) => {
     return dispatch(fetchPosts(filters));
   }, [dispatch]);
 

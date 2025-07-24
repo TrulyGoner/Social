@@ -10,15 +10,27 @@ import { getPlatformColor, getStatusColor } from '../../../utils/helpers/uiHelpe
 
 interface PostCardProps {
   post: Post;
+  onUpdate?: (post: any) => void;
+  onDelete?: (postId: string) => void;
+  compact?: boolean;
 }
 
-export const PostCard: React.FC<PostCardProps> = ({ post }) => {
-  const { deletePost, updatePost } = usePosts();
+export const PostCard: React.FC<PostCardProps> = ({
+  post,
+  onUpdate,
+  onDelete,
+  compact = false
+}) => {
+  const { deletePost: defaultDeletePost, updatePost: defaultUpdatePost } = usePosts();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleDelete = async () => {
-    await deletePost(post.id);
+    if (onDelete) {
+      await onDelete(post.id);
+    } else {
+      await defaultDeletePost(post.id);
+    }
     setShowDeleteModal(false);
   };
 
@@ -27,10 +39,15 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   const handlePublish = async () => {
-    await updatePost({
+    const updatedPost = {
       id: post.id,
       status: 'published'
-    });
+    };
+    if (onUpdate) {
+      await onUpdate(updatedPost);
+    } else {
+      await defaultUpdatePost(updatedPost);
+    }
   };
 
   return (
@@ -122,14 +139,19 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
               </div>
             </div>
             
-            {post.status === 'draft' && (
-              <Button
-                size="sm"
-                onClick={handlePublish}
-              >
-                Publish Now
-              </Button>
-            )}
+
+          </div>
+        )}
+
+        {/* Draft Actions */}
+        {post.status === 'draft' && (
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+            <Button
+              size="sm"
+              onClick={handlePublish}
+            >
+              Publish Now
+            </Button>
           </div>
         )}
 

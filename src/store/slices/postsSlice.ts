@@ -25,7 +25,7 @@ const initialState: PostsState = {
 // Async Thunks
 export const fetchPosts = createAsyncThunk(
   'posts/fetchPosts',
-  async (filters?: PostFilters, { rejectWithValue }) => {
+  async (filters: PostFilters = {}, { rejectWithValue }) => {
     try {
       const response = await postsApi.getPosts(filters);
       return response.data;

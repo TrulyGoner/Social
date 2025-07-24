@@ -8,7 +8,7 @@ import { PostsPage } from './pages/Posts';
 import { AnalyticsPage } from './pages/Analytics';
 import { SettingsPage } from './pages/Settings';
 import { ROUTES } from './utils/constants/config';
-import './styles/globals.css';
+import './index.css';
 
 function App() {
   return (

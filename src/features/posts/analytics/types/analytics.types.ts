@@ -45,3 +45,10 @@ export interface AnalyticsData {
     end: Date;
     period: 'day' | 'week' | 'month' | 'quarter' | 'year';
   }
+
+  export interface AnalyticsFilters {
+    dateFrom?: string;
+    dateTo?: string;
+    platform?: string;
+    metric?: string;
+  }

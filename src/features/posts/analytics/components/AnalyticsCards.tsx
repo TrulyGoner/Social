@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { TrendingUp, TrendingDown, Users, Heart, Share2, MessageCircle } from 'lucide-react';
-import { Card } from '../../../components/ui/Card';
-import { selectAnalyticsData } from '../../../store/selectors/analyticsSelectors';
-import { formatNumber, formatPercentage } from '../../../utils/helpers/formatters';
+import { Card } from '../../../../components/ui/card';
+import { selectAnalyticsData } from '../../../../store/selectors/analyticsSelectors';
+import { formatNumber, formatPercentage } from '../../../../utils/helpers/formatters';
 
 export const AnalyticsCards: React.FC = () => {
   const analyticsData = useSelector(selectAnalyticsData);
@@ -54,7 +54,7 @@ export const AnalyticsCards: React.FC = () => {
                   {metric.name}
                 </p>
                 <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {formatNumber(metric.value)}
+                  {typeof metric.value === 'number' ? formatNumber(metric.value) : metric.value}
                 </p>
                 <div className={`flex items-center mt-1 text-sm ${
                   isPositive ? 'text-green-600' : 'text-red-600'
