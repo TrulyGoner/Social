@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { ErrorBoundary } from './components/common/errorBoundary';
 import { Dashboard } from './pages/Dashboard';
 import { PostsPage } from './pages/Posts';
 import { AnalyticsPage } from './pages/Analytics';
