@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { ErrorBoundary } from './components/common/errorBoundary';
@@ -17,12 +22,18 @@ function App() {
         <Router>
           <div className="App">
             <Routes>
-              <Route path="/" element={<Navigate to={ROUTES.dashboard} replace />} />
+              <Route
+                path="/"
+                element={<Navigate to={ROUTES.dashboard} replace />}
+              />
               <Route path={ROUTES.dashboard} element={<Dashboard />} />
               <Route path={ROUTES.posts} element={<PostsPage />} />
               <Route path={ROUTES.analytics} element={<AnalyticsPage />} />
               <Route path={ROUTES.settings} element={<SettingsPage />} />
-              <Route path="*" element={<Navigate to={ROUTES.dashboard} replace />} />
+              <Route
+                path="*"
+                element={<Navigate to={ROUTES.dashboard} replace />}
+              />
             </Routes>
           </div>
         </Router>

@@ -23,7 +23,22 @@
 }
 
 /* Social media platform colors */
-.bg-twitter { background-color: #1DA1F2; }
-.bg-instagram { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
-.bg-facebook { background-color: #4267B2; }
-.bg-linkedin { background-color: #2867B2; }
+.bg-twitter {
+  background-color: #1da1f2;
+}
+.bg-instagram {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+}
+.bg-facebook {
+  background-color: #4267b2;
+}
+.bg-linkedin {
+  background-color: #2867b2;
+}

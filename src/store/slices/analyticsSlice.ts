@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AnalyticsData, PlatformAnalytics, EngagementMetrics } from '../../features/posts/analytics/types/analytics.types';
+import {
+  AnalyticsData,
+  PlatformAnalytics,
+  EngagementMetrics,
+} from '../../features/posts/analytics/types/analytics.types';
 import { analyticsApi } from '../../services/api/analytics.api';
 
 interface AnalyticsState {
@@ -17,12 +21,16 @@ const initialState: AnalyticsState = {
   engagementTrends: [],
   loading: false,
   error: null,
-  lastUpdated: null
+  lastUpdated: null,
 };
 
 export const fetchAnalyticsData = createAsyncThunk(
   'analytics/fetchData',
-  async (filters?: { dateFrom?: string; dateTo?: string; platform?: string }) => {
+  async (filters?: {
+    dateFrom?: string;
+    dateTo?: string;
+    platform?: string;
+  }) => {
     const response = await analyticsApi.getOverview(filters);
     return response.data;
   }
@@ -40,13 +48,13 @@ const analyticsSlice = createSlice({
   name: 'analytics',
   initialState,
   reducers: {
-    clearAnalyticsError: (state) => {
+    clearAnalyticsError: state => {
       state.error = null;
-    }
+    },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchAnalyticsData.pending, (state) => {
+      .addCase(fetchAnalyticsData.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -62,7 +70,7 @@ const analyticsSlice = createSlice({
       .addCase(fetchPlatformAnalytics.fulfilled, (state, action) => {
         state.platformData = [action.payload];
       });
-  }
+  },
 });
 
 export const { clearAnalyticsError } = analyticsSlice.actions;

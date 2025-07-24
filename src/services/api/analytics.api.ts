@@ -1,5 +1,10 @@
 // import { apiClient } from '../utils/apiClient'; // Not used for mock data
-import { AnalyticsData, PlatformAnalytics, EngagementMetrics, AnalyticsFilters } from '../../features/posts/analytics/types/analytics.types';
+import {
+  AnalyticsData,
+  PlatformAnalytics,
+  EngagementMetrics,
+  AnalyticsFilters,
+} from '../../features/posts/analytics/types/analytics.types';
 
 export interface AnalyticsResponse {
   data: AnalyticsData;
@@ -7,7 +12,9 @@ export interface AnalyticsResponse {
 }
 
 export const analyticsApi = {
-  async getOverview(filters?: AnalyticsFilters): Promise<{ data: AnalyticsResponse }> {
+  async getOverview(
+    filters?: AnalyticsFilters
+  ): Promise<{ data: AnalyticsResponse }> {
     // For demo purposes, return mock data since there's no backend
     const mockData: AnalyticsResponse = {
       data: {
@@ -24,16 +31,18 @@ export const analyticsApi = {
         totalImpressions: 124500,
         impressionsChange: 22.1,
       },
-      success: true
+      success: true,
     };
 
     // Simulate API call
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => resolve({ data: mockData }), 500);
     });
   },
 
-  async getPlatformAnalytics(platform: string): Promise<{ data: PlatformAnalytics }> {
+  async getPlatformAnalytics(
+    platform: string
+  ): Promise<{ data: PlatformAnalytics }> {
     // Mock platform analytics data
     const mockPlatformData: PlatformAnalytics = {
       platform,
@@ -43,23 +52,30 @@ export const analyticsApi = {
       growthRate: Math.floor(Math.random() * 20) + 5,
     };
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => resolve({ data: mockPlatformData }), 300);
     });
   },
 
-  async getEngagementTrends(filters?: AnalyticsFilters): Promise<{ data: EngagementMetrics[] }> {
+  async getEngagementTrends(
+    filters?: AnalyticsFilters
+  ): Promise<{ data: EngagementMetrics[] }> {
     // Generate mock trend data
-    const mockTrends: EngagementMetrics[] = Array.from({ length: 7 }, (_, i) => ({
-      date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000).toISOString(),
-      likes: Math.floor(Math.random() * 100) + 50,
-      shares: Math.floor(Math.random() * 30) + 10,
-      comments: Math.floor(Math.random() * 20) + 5,
-      impressions: Math.floor(Math.random() * 1000) + 500,
-    }));
+    const mockTrends: EngagementMetrics[] = Array.from(
+      { length: 7 },
+      (_, i) => ({
+        date: new Date(
+          Date.now() - (6 - i) * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        likes: Math.floor(Math.random() * 100) + 50,
+        shares: Math.floor(Math.random() * 30) + 10,
+        comments: Math.floor(Math.random() * 20) + 5,
+        impressions: Math.floor(Math.random() * 1000) + 500,
+      })
+    );
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => resolve({ data: mockTrends }), 400);
     });
-  }
+  },
 };

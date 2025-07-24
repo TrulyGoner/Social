@@ -1,5 +1,10 @@
 import { apiClient } from '../utils/apiClient';
-import { Post, CreatePostData, UpdatePostData, PostFilters } from '../../features/posts/types/post.types';
+import {
+  Post,
+  CreatePostData,
+  UpdatePostData,
+  PostFilters,
+} from '../../features/posts/types/post.types';
 
 export interface PostsResponse {
   posts: Post[];
@@ -29,7 +34,9 @@ export const postsApi = {
         params.append('search', filters.search);
       }
 
-      const response = await apiClient.get<PostsResponse>(`/posts?${params.toString()}`);
+      const response = await apiClient.get<PostsResponse>(
+        `/posts?${params.toString()}`
+      );
       return response;
     } catch (error) {
       // Return mock data if API is unavailable
@@ -38,7 +45,8 @@ export const postsApi = {
           posts: [
             {
               id: '1',
-              content: 'Sample post content - exploring the latest trends in social media marketing! 🚀',
+              content:
+                'Sample post content - exploring the latest trends in social media marketing! 🚀',
               platform: 'twitter',
               status: 'published',
               publishedAt: new Date('2024-01-15T10:30:00Z'),
@@ -46,16 +54,17 @@ export const postsApi = {
                 likes: 245,
                 shares: 23,
                 comments: 12,
-                views: 1520
+                views: 1520,
               },
               hashtags: ['marketing', 'socialmedia', 'trends'],
               createdAt: new Date('2024-01-15T09:00:00Z'),
               updatedAt: new Date('2024-01-15T10:30:00Z'),
-              authorId: 'user1'
+              authorId: 'user1',
             },
             {
               id: '2',
-              content: 'Behind the scenes: Our team working on the latest app update!',
+              content:
+                'Behind the scenes: Our team working on the latest app update!',
               platform: 'instagram',
               status: 'published',
               publishedAt: new Date('2024-01-14T14:20:00Z'),
@@ -63,29 +72,30 @@ export const postsApi = {
                 likes: 189,
                 shares: 15,
                 comments: 8,
-                views: 890
+                views: 890,
               },
               hashtags: ['behindthescenes', 'teamwork', 'app'],
               createdAt: new Date('2024-01-14T13:00:00Z'),
               updatedAt: new Date('2024-01-14T14:20:00Z'),
-              authorId: 'user1'
+              authorId: 'user1',
             },
             {
               id: '3',
-              content: 'Tips for better productivity in remote work environments',
+              content:
+                'Tips for better productivity in remote work environments',
               platform: 'linkedin',
               status: 'scheduled',
               scheduledFor: new Date('2024-01-20T09:00:00Z'),
               hashtags: ['productivity', 'remotework', 'tips'],
               createdAt: new Date('2024-01-12T11:00:00Z'),
               updatedAt: new Date('2024-01-12T11:00:00Z'),
-              authorId: 'user1'
-            }
+              authorId: 'user1',
+            },
           ],
           totalCount: 3,
           page: 1,
-          pageSize: 10
-        }
+          pageSize: 10,
+        },
       };
     }
   },
@@ -104,8 +114,8 @@ export const postsApi = {
           status: 'draft',
           createdAt: new Date(),
           updatedAt: new Date(),
-          authorId: 'user1'
-        }
+          authorId: 'user1',
+        },
       };
     }
   },
@@ -123,13 +133,16 @@ export const postsApi = {
           status: 'draft',
           createdAt: new Date(),
           updatedAt: new Date(),
-          authorId: 'user1'
-        }
+          authorId: 'user1',
+        },
       };
     }
   },
 
-  async updatePost(id: string, postData: Partial<UpdatePostData>): Promise<{ data: Post }> {
+  async updatePost(
+    id: string,
+    postData: Partial<UpdatePostData>
+  ): Promise<{ data: Post }> {
     try {
       const response = await apiClient.put<Post>(`/posts/${id}`, postData);
       return response;
@@ -144,8 +157,8 @@ export const postsApi = {
           createdAt: new Date(),
           updatedAt: new Date(),
           authorId: 'user1',
-          ...postData
-        }
+          ...postData,
+        },
       };
     }
   },
@@ -176,8 +189,8 @@ export const postsApi = {
           scheduledFor: new Date(scheduledAt),
           createdAt: new Date(),
           updatedAt: new Date(),
-          authorId: 'user1'
-        }
+          authorId: 'user1',
+        },
       };
     }
   },
@@ -197,8 +210,8 @@ export const postsApi = {
           publishedAt: new Date(),
           createdAt: new Date(),
           updatedAt: new Date(),
-          authorId: 'user1'
-        }
+          authorId: 'user1',
+        },
       };
     }
   },
