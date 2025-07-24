@@ -52,7 +52,7 @@ const analyticsSlice = createSlice({
       })
       .addCase(fetchAnalyticsData.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload.data;
+        state.data = action.payload;
         state.lastUpdated = new Date().toISOString();
       })
       .addCase(fetchAnalyticsData.rejected, (state, action) => {
