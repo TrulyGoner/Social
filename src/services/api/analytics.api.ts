@@ -1,4 +1,4 @@
-import { apiClient } from '../utils/apiClient';
+// import { apiClient } from '../utils/apiClient'; // Not used for mock data
 import { AnalyticsData, PlatformAnalytics, EngagementMetrics, AnalyticsFilters } from '../../features/posts/analytics/types/analytics.types';
 
 export interface AnalyticsResponse {
