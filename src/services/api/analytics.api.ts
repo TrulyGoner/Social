@@ -1,100 +1,65 @@
 import { apiClient } from '../utils/apiClient';
-import { AnalyticsData, AnalyticsFilters } from '../../features/posts/analytics/types/analytics.types';
+import { AnalyticsData, PlatformAnalytics, EngagementMetrics, AnalyticsFilters } from '../../features/posts/analytics/types/analytics.types';
 
 export interface AnalyticsResponse {
   data: AnalyticsData;
-  period: {
-    from: string;
-    to: string;
-  };
-}
-
-export interface EngagementMetrics {
-  likes: number;
-  comments: number;
-  shares: number;
-  clicks: number;
-  impressions: number;
-}
-
-export interface PlatformAnalytics {
-  platform: string;
-  metrics: EngagementMetrics;
-  growth: number;
-  topPosts: Array<{
-    id: string;
-    content: string;
-    engagement: number;
-    platform: string;
-  }>;
+  success: boolean;
 }
 
 export const analyticsApi = {
   async getOverview(filters?: AnalyticsFilters): Promise<{ data: AnalyticsResponse }> {
-    const params = new URLSearchParams();
-    
-    if (filters?.dateFrom) {
-      params.append('dateFrom', filters.dateFrom);
-    }
-    if (filters?.dateTo) {
-      params.append('dateTo', filters.dateTo);
-    }
-    if (filters?.platform) {
-      params.append('platform', filters.platform);
-    }
+    // For demo purposes, return mock data since there's no backend
+    const mockData: AnalyticsResponse = {
+      data: {
+        totalFollowers: 2400,
+        followersChange: 12.5,
+        engagementRate: 5.8,
+        engagementChange: 2.1,
+        totalShares: 892,
+        sharesChange: 15.3,
+        totalComments: 1400,
+        commentsChange: 8.7,
+        totalPosts: 42,
+        postsChange: 12.0,
+        totalImpressions: 124500,
+        impressionsChange: 22.1,
+      },
+      success: true
+    };
 
-    const response = await apiClient.get<AnalyticsResponse>(`/analytics/overview?${params.toString()}`);
-    return response;
+    // Simulate API call
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ data: mockData }), 500);
+    });
   },
 
-  async getPlatformAnalytics(platform: string, filters?: AnalyticsFilters): Promise<{ data: PlatformAnalytics }> {
-    const params = new URLSearchParams();
-    
-    if (filters?.dateFrom) {
-      params.append('dateFrom', filters.dateFrom);
-    }
-    if (filters?.dateTo) {
-      params.append('dateTo', filters.dateTo);
-    }
+  async getPlatformAnalytics(platform: string): Promise<{ data: PlatformAnalytics }> {
+    // Mock platform analytics data
+    const mockPlatformData: PlatformAnalytics = {
+      platform,
+      followers: Math.floor(Math.random() * 5000) + 1000,
+      engagement: Math.floor(Math.random() * 10) + 2,
+      posts: Math.floor(Math.random() * 50) + 10,
+      growthRate: Math.floor(Math.random() * 20) + 5,
+    };
 
-    const response = await apiClient.get<PlatformAnalytics>(`/analytics/platform/${platform}?${params.toString()}`);
-    return response;
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ data: mockPlatformData }), 300);
+    });
   },
 
-  async getEngagementTrends(filters?: AnalyticsFilters): Promise<{ data: any[] }> {
-    const params = new URLSearchParams();
-    
-    if (filters?.dateFrom) {
-      params.append('dateFrom', filters.dateFrom);
-    }
-    if (filters?.dateTo) {
-      params.append('dateTo', filters.dateTo);
-    }
-    if (filters?.platform) {
-      params.append('platform', filters.platform);
-    }
+  async getEngagementTrends(filters?: AnalyticsFilters): Promise<{ data: EngagementMetrics[] }> {
+    // Generate mock trend data
+    const mockTrends: EngagementMetrics[] = Array.from({ length: 7 }, (_, i) => ({
+      date: new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000).toISOString(),
+      likes: Math.floor(Math.random() * 100) + 50,
+      shares: Math.floor(Math.random() * 30) + 10,
+      comments: Math.floor(Math.random() * 20) + 5,
+      impressions: Math.floor(Math.random() * 1000) + 500,
+    }));
 
-    const response = await apiClient.get<any[]>(`/analytics/engagement-trends?${params.toString()}`);
-    return response;
-  },
-
-  async getTopContent(filters?: AnalyticsFilters & { limit?: number }): Promise<{ data: any[] }> {
-    const params = new URLSearchParams();
-    
-    if (filters?.dateFrom) {
-      params.append('dateFrom', filters.dateFrom);
-    }
-    if (filters?.dateTo) {
-      params.append('dateTo', filters.dateTo);
-    }
-    if (filters?.platform) {
-      params.append('platform', filters.platform);
-    }
-    if (filters?.limit) {
-      params.append('limit', filters.limit.toString());
-    }
-
-    const response = await apiClient.get<any[]>(`/analytics/top-content?${params.toString()}`);
-    return response;
-  },
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ data: mockTrends }), 400);
+    });
+  }
 };
