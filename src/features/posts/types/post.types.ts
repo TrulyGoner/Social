@@ -14,21 +14,21 @@ export interface Post {
   content: string;
   platform: Platform;
   status: PostStatus;
-  scheduledFor?: Date;
-  publishedAt?: Date;
+  scheduledFor?: string;
+  publishedAt?: string;
   engagement?: PostEngagement;
   mediaUrls?: string[];
   hashtags?: string[];
   mentions?: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   authorId: string;
 }
 
 export interface CreatePostData {
   content: string;
   platform: Platform;
-  scheduledFor?: Date;
+  scheduledFor?: string;
   mediaUrls?: string[];
 }
 

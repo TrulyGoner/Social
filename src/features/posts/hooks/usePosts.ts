@@ -40,11 +40,11 @@ export const usePosts = () => {
     return dispatch(updatePost(updatedPost));
   }, [dispatch]);
 
-  const schedulePost = useCallback((postId: string, scheduledFor: Date) => {
-    const updatedPost = { 
-      id: postId, 
-      status: 'scheduled' as const, 
-      scheduledFor 
+  const schedulePost = useCallback((postId: string, scheduledFor: string) => {
+    const updatedPost = {
+      id: postId,
+      status: 'scheduled' as const,
+      scheduledFor
     };
     return dispatch(updatePost(updatedPost));
   }, [dispatch]);
