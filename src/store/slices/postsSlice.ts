@@ -140,7 +140,15 @@ export const { setFilters, clearFilters, setCurrentPage } = postsSlice.actions;
 export default postsSlice.reducer;
 
 // Selectors
-export const selectPosts = (state: { posts: PostsState }) => state.posts.items;
+export const selectPosts = (state: { posts: PostsState }) => {
+  const { items, filters } = state.posts;
+  return items.filter(post => {
+    const matchesSearch = filters.search ? post.content.toLowerCase().includes(filters.search.toLowerCase()) : true;
+    const matchesStatus = filters.status ? post.status === filters.status : true;
+    const matchesPlatform = filters.platform ? post.platform === filters.platform : true;
+    return matchesSearch && matchesStatus && matchesPlatform;
+  });
+};
 export const selectPostsLoading = (state: { posts: PostsState }) => state.posts.loading;
 export const selectPostsError = (state: { posts: PostsState }) => state.posts.error;
 export const selectPostsFilters = (state: { posts: PostsState }) => state.posts.filters;

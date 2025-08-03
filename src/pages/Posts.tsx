@@ -10,6 +10,7 @@ import { fetchPosts, setFilters, clearFilters } from '../store/slices/postsSlice
 import { selectPosts, selectPostsLoading, selectPostsFilters } from '../store/slices/postsSlice';
 import { POST_STATUS, SOCIAL_PLATFORMS } from '../utils/constants/config';
 import { Plus, Search, Filter, RefreshCw } from 'lucide-react';
+import { Platform, PostStatus } from '../features/posts/types/post.types';
 
 export const PostsPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ export const PostsPage: React.FC = () => {
   const loading = useAppSelector(selectPostsLoading);
   const filters = useAppSelector(selectPostsFilters);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState<string>('');
+  const [selectedStatus, setSelectedStatus] = useState<PostStatus | ''>('');
   const [selectedPlatform, setSelectedPlatform] = useState<string>('');
 
   const { createPost, updatePost, deletePost } = usePosts();
@@ -28,17 +29,29 @@ export const PostsPage: React.FC = () => {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    dispatch(setFilters({ search: query }));
+    dispatch(setFilters({
+      search: query,
+      status: selectedStatus || undefined,
+      platform: selectedPlatform ? (selectedPlatform as Platform) : undefined,
+    }));
   };
 
-  const handleStatusFilter = (status: string) => {
+  const handleStatusFilter = (status: PostStatus | '') => {
     setSelectedStatus(status);
-    dispatch(setFilters({ status: (status as any) || undefined }));
+    dispatch(setFilters({
+      search: searchQuery,
+      status: status || undefined,
+      platform: selectedPlatform ? (selectedPlatform as Platform) : undefined,
+    }));
   };
 
   const handlePlatformFilter = (platform: string) => {
     setSelectedPlatform(platform);
-    dispatch(setFilters({ platform: (platform as any) || undefined }));
+    dispatch(setFilters({
+      search: searchQuery,
+      status: selectedStatus || undefined,
+      platform: platform ? (platform as Platform) : undefined,
+    }));
   };
 
   const handleClearFilters = () => {
@@ -104,7 +117,7 @@ export const PostsPage: React.FC = () => {
             
             <select
               value={selectedStatus}
-              onChange={(e) => handleStatusFilter(e.target.value)}
+              onChange={(e) => handleStatusFilter(e.target.value as PostStatus | '')}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {statusOptions.map((option) => (

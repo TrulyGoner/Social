@@ -19,7 +19,7 @@ import { useTheme } from '../hooks/useTheme';
 
 
 export const SettingsPage: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme(); 
   const [activeTab, setActiveTab] = useState('profile');
   const [notifications, setNotifications] = useState({
     email: true,
@@ -265,7 +265,7 @@ export const SettingsPage: React.FC = () => {
                         return (
                           <button
                             key={themeOption}
-                            onClick={() => setTheme(themeOption as any)}
+                            onClick={() => setTheme(themeOption as any)} // <-- FIX: use setTheme
                             className={`p-3 border rounded-lg text-center transition-colors capitalize ${
                               isActive
                                 ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300'
