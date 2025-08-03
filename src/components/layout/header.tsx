@@ -1,11 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BarChart3, Moon, Sun, Settings, User } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useTheme } from '../../hooks/useTheme';
+import { ROUTES } from '../../utils/constants/config';
 
 export const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
 
+  const handleSettingsClick = () => {
+    navigate(ROUTES.settings);
+  };
+
+  const handleProfileClick = () => {
+    navigate(ROUTES.settings);
+  };
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
       <div className="px-6 py-4">
@@ -32,6 +42,7 @@ export const Header: React.FC = () => {
               variant="ghost"
               size="sm"
               icon={Settings}
+              onClick={handleSettingsClick}
               aria-label="Settings"
             />
             
@@ -39,6 +50,7 @@ export const Header: React.FC = () => {
               variant="ghost"
               size="sm"
               icon={User}
+              onClick={handleProfileClick}
               aria-label="Profile"
             />
           </div>

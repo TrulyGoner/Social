@@ -25,8 +25,8 @@ export const Button: React.FC<ButtonProps> = ({
     primary: 'bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500',
     secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-900 focus:ring-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white',
     danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500',
-    ghost: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800',
-    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800'
+    ghost: 'bg-blue-50 hover:bg-blue-100 text-blue-700 focus:ring-blue-500 border border-blue-200 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800',
+    outline: 'bg-blue-50 hover:bg-blue-100 text-blue-700 focus:ring-blue-500 border border-blue-200 hover:border-blue-300 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800'
   };
   
   const sizes = {
@@ -44,9 +44,9 @@ export const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
       ) : Icon && !children ? (
-        <Icon className="w-4 h-4" />
+        <Icon className="w-5 h-5" strokeWidth={2.5}/>
       ) : Icon ? (
-        <Icon className="w-4 h-4 mr-2" />
+        <Icon className="w-4 h-4 mr-2" strokeWidth={2.5} />
       ) : null}
       {children}
     </button>

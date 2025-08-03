@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark' | 'system';
 
 export const useTheme = () => {
   const [theme, setTheme] = useState<Theme>('light');
@@ -8,15 +8,13 @@ export const useTheme = () => {
   useEffect(() => {
     // Check localStorage for saved theme
     const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) {
+    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
       setTheme(savedTheme);
       applyTheme(savedTheme);
     } else {
-      // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const systemTheme = prefersDark ? 'dark' : 'light';
-      setTheme(systemTheme);
-      applyTheme(systemTheme);
+      // Default to system preference
+      setTheme('system');
+      applyTheme('system');
     }
   }, []);
 
@@ -24,8 +22,15 @@ export const useTheme = () => {
     const root = document.documentElement;
     if (newTheme === 'dark') {
       root.classList.add('dark');
-    } else {
+    } else if (newTheme === 'light') {
       root.classList.remove('dark');
+    } else if (newTheme === 'system') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
     }
   };
 

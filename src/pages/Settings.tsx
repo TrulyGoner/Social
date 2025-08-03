@@ -15,8 +15,11 @@ import {
   Trash2,
   Check
 } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
+
 
 export const SettingsPage: React.FC = () => {
+  const { theme, setTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('profile');
   const [notifications, setNotifications] = useState({
     email: true,
@@ -67,7 +70,7 @@ export const SettingsPage: React.FC = () => {
                     className={`w-full flex items-center gap-3 px-3 py-2 text-left rounded-lg transition-colors ${
                       activeTab === tab.id
                         ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        : 'text-blue-700 hover:text-blue-800 hover:bg-blue-100 bg-blue-50 border border-blue-200 hover:border-blue-300 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800'
                     }`}
                   >
                     <IconComponent className="w-5 h-5" />
@@ -257,14 +260,22 @@ export const SettingsPage: React.FC = () => {
                       Theme
                     </h3>
                     <div className="grid grid-cols-3 gap-3">
-                      {['Light', 'Dark', 'System'].map((theme) => (
-                        <button
-                          key={theme}
-                          className="p-3 border border-gray-200 dark:border-gray-700 rounded-lg text-center hover:bg-gray-50 dark:hover:bg-gray-800"
-                        >
-                          {theme}
-                        </button>
-                      ))}
+                      {['light', 'dark', 'system'].map((themeOption) => {
+                        const isActive = theme === themeOption;
+                        return (
+                          <button
+                            key={themeOption}
+                            onClick={() => setTheme(themeOption as any)}
+                            className={`p-3 border rounded-lg text-center transition-colors capitalize ${
+                              isActive
+                                ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300'
+                                : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-white'
+                            }`}
+                          >
+                            {themeOption}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
