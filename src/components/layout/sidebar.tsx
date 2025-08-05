@@ -4,9 +4,7 @@ import {
   LayoutDashboard, 
   FileText, 
   BarChart3, 
-  Calendar, 
   Settings, 
-  Users 
 } from 'lucide-react';
 import { ROUTES } from '../../utils/constants/config';
 
@@ -21,8 +19,6 @@ const navigation: NavItem[] = [
   { name: 'Dashboard', href: ROUTES.dashboard, icon: LayoutDashboard },
   { name: 'Posts', href: ROUTES.posts, icon: FileText },
   { name: 'Analytics', href: ROUTES.analytics, icon: BarChart3 },
-  { name: 'Calendar', href: ROUTES.calendar, icon: Calendar },
-  { name: 'Team', href: '/team', icon: Users },
   { name: 'Settings', href: ROUTES.settings, icon: Settings },
 ];
 
@@ -32,7 +28,7 @@ export const Sidebar: React.FC = () => {
   return (
     <div className="fixed inset-y-0 left-0 z-30 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
       {/* Navigation */}
-      <nav className="mt-8 px-4 space-y-2">
+      <nav className="mt-8 px-4 space-y-2" style={{ marginTop: '20px' }}>
         {navigation.map((item) => {
           const isActive = location.pathname === item.href;
           const Icon = item.icon;

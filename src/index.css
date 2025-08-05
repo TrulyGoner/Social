@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Basic CSS Reset and Styles */
 * {
-  margin: 0;
+  margin: 1px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -33,7 +32,6 @@ code {
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* Comprehensive utility classes to match Tailwind */
 .hidden {
   display: none;
 }
@@ -546,7 +544,6 @@ code {
   transition-duration: 150ms;
 }
 
-/* Focus states */
 .focus\:ring-2:focus {
   box-shadow: 0 0 0 2px #3b82f6;
 }
@@ -554,7 +551,6 @@ code {
   border-color: transparent;
 }
 
-/* Hover states */
 .hover\:bg-gray-50:hover {
   background-color: #f9fafb;
 }
@@ -574,7 +570,6 @@ code {
   background-color: #fef2f2;
 }
 
-/* Dark mode styles */
 .dark .dark\:bg-gray-800 {
   background-color: #1f2937;
 }
@@ -597,7 +592,6 @@ code {
   background-color: #1f2937;
 }
 
-/* Animations */
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -622,7 +616,6 @@ code {
   }
 }
 
-/* Media queries */
 @media (min-width: 768px) {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -659,7 +652,6 @@ code {
   }
 }
 
-/* Component sizes */
 .size-sm .btn {
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;
@@ -668,7 +660,6 @@ code {
   grid-column: 1 / -1;
 }
 
-/* Additional utility classes */
 .overflow-x-hidden {
   overflow-x: hidden;
 }
@@ -685,12 +676,10 @@ code {
   user-select: none;
 }
 
-/* Opacity */
 .bg-opacity-50 {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Focus ring */
 .focus\:outline-none:focus {
   outline: none;
 }
@@ -700,7 +689,6 @@ code {
     0 0 0 4px #3b82f6;
 }
 
-/* Disabled states */
 .disabled\:opacity-50:disabled {
   opacity: 0.5;
 }

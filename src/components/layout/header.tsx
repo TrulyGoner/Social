@@ -17,18 +17,15 @@ export const Header: React.FC = () => {
     navigate(ROUTES.settings);
   };
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 w-full z-50">
       <div className="px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3" style={{ marginLeft: '260px' }}>
             <BarChart3 className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               Social Dashboard
             </h1>
           </div>
-
-          {/* Actions */}
           <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
@@ -37,7 +34,6 @@ export const Header: React.FC = () => {
               onClick={toggleTheme}
               aria-label="Toggle theme"
             />
-            
             <Button
               variant="ghost"
               size="sm"
@@ -45,7 +41,6 @@ export const Header: React.FC = () => {
               onClick={handleSettingsClick}
               aria-label="Settings"
             />
-            
             <Button
               variant="ghost"
               size="sm"

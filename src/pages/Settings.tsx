@@ -269,7 +269,7 @@ export const SettingsPage: React.FC = () => {
                             className={`p-3 border rounded-lg text-center transition-colors capitalize ${
                               isActive
                                 ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-300'
-                                : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-white'
+                                : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-blue'
                             }`}
                           >
                             {themeOption}

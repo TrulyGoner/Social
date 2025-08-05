@@ -22,7 +22,6 @@ const initialState: PostsState = {
   pageSize: 10
 };
 
-// Async Thunks
 export const fetchPosts = createAsyncThunk(
   'posts/fetchPosts',
   async (filters: PostFilters = {}, { rejectWithValue }) => {
