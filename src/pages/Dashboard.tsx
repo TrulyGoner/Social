@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/redux';
 import { Layout } from '../components/layout/Layout';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { AnalyticsCards } from '../features/posts/analytics/components/AnalyticsCards';
 import { PostCard } from '../features/posts/components/postCard';
-import { fetchPosts } from '../store/slices/postsSlice';
+import { fetchPosts, createPost } from '../store/slices/postsSlice';
 import { selectPosts, selectPostsLoading } from '../store/slices/postsSlice';
 import { Plus, TrendingUp, Users, Calendar, BarChart3 } from 'lucide-react';
+import type { Platform } from '../features/posts/types/post.types';
 
 export const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectPosts);
   const loading = useAppSelector(selectPostsLoading);
+  const [showModal, setShowModal] = useState(false);
+  const [newContent, setNewContent] = useState('');
+  const [newPlatform, setNewPlatform] = useState('');
 
   useEffect(() => {
     dispatch(fetchPosts({ limit: 5 }));
@@ -51,6 +55,21 @@ export const Dashboard: React.FC = () => {
     },
   ];
 
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setNewContent('');
+    setNewPlatform('');
+  };
+
+  const handleCreatePostSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newContent.trim() && newPlatform) {
+      dispatch(createPost({ content: newContent, platform: newPlatform as Platform }));
+      handleCloseModal();
+    }
+  };
+
   return (
     <Layout>
       <div className="space-y-6">
@@ -64,7 +83,7 @@ export const Dashboard: React.FC = () => {
               Welcome back! Here's your social media overview.
             </p>
           </div>
-          <Button className="flex items-center gap-2">
+          <Button className="flex items-center gap-2" onClick={handleOpenModal}>
             <Plus className="w-4 h-4" />
             Create Post
           </Button>
@@ -154,6 +173,42 @@ export const Dashboard: React.FC = () => {
           </Card>
         </div>
       </div>
+
+      {/* Modal for Creating Post */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <form className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md" onSubmit={handleCreatePostSubmit}>
+            <h2 className="text-xl font-bold mb-4">Create New Post</h2>
+            <textarea
+              value={newContent}
+              onChange={e => setNewContent(e.target.value)}
+              placeholder="Write your post..."
+              className="w-full border rounded p-2 mb-4"
+              required
+            />
+            <select
+              value={newPlatform}
+              onChange={e => setNewPlatform(e.target.value)}
+              className="w-full border rounded p-2 mb-4"
+              required
+            >
+              <option value="">Select platform</option>
+              {/* Replace with your actual platform options */}
+              <option value="vk">VK</option>
+              <option value="facebook">Facebook</option>
+              <option value="twitter">Twitter</option>
+            </select>
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={handleCloseModal} className="px-4 py-2 border rounded">
+                Cancel
+              </button>
+              <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+                Add Post
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </Layout>
   );
 };

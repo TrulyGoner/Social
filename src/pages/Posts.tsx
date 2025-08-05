@@ -20,6 +20,9 @@ export const PostsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<PostStatus | ''>('');
   const [selectedPlatform, setSelectedPlatform] = useState<string>('');
+  const [showModal, setShowModal] = useState(false);
+  const [newContent, setNewContent] = useState('');
+  const [newPlatform, setNewPlatform] = useState('');
 
   const { createPost, updatePost, deletePost } = usePosts();
 
@@ -65,6 +68,21 @@ export const PostsPage: React.FC = () => {
     dispatch(fetchPosts(filters));
   };
 
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setNewContent('');
+    setNewPlatform('');
+  };
+
+  const handleCreatePostSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newContent.trim() && newPlatform) {
+      createPost({ content: newContent, platform: newPlatform as Platform }); 
+      handleCloseModal();
+    }
+  };
+
   const statusOptions = [
     { value: '', label: 'All Status' },
     { value: POST_STATUS.DRAFT, label: 'Draft' },
@@ -94,7 +112,7 @@ export const PostsPage: React.FC = () => {
               Manage your social media posts and content.
             </p>
           </div>
-          <Button className="flex items-center gap-2">
+          <Button className="flex items-center gap-2" onClick={handleOpenModal}>
             <Plus className="w-4 h-4" />
             Create Post
           </Button>
@@ -177,7 +195,7 @@ export const PostsPage: React.FC = () => {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Get started by creating your first post.
               </p>
-              <Button>
+              <Button onClick={handleOpenModal}>
                 <Plus className="w-4 h-4 mr-2" />
                 Create Post
               </Button>
@@ -194,6 +212,41 @@ export const PostsPage: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Create Post Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <form className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md" onSubmit={handleCreatePostSubmit}>
+            <h2 className="text-xl font-bold mb-4">Create New Post</h2>
+            <textarea
+              value={newContent}
+              onChange={e => setNewContent(e.target.value)}
+              placeholder="Write your post..."
+              className="w-full border rounded p-2 mb-4"
+              required
+            />
+            <select
+              value={newPlatform}
+              onChange={e => setNewPlatform(e.target.value)}
+              className="w-full border rounded p-2 mb-4"
+              required
+            >
+              <option value="">Select platform</option>
+              {Object.values(SOCIAL_PLATFORMS).map(platform => (
+                <option key={platform} value={platform}>{platform}</option>
+              ))}
+            </select>
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={handleCloseModal} className="px-4 py-2 border rounded">
+                Cancel
+              </button>
+              <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+                Add Post
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </Layout>
   );
 };
