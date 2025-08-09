@@ -13,6 +13,63 @@ export interface PostsResponse {
   pageSize: number;
 }
 
+// Example mock posts array
+const mockPosts: Post[] = [
+  {
+    id: '1',
+    content:
+      'Sample post content - exploring the latest trends in social media marketing! 🚀',
+    platform: 'twitter',
+    status: 'published',
+    publishedAt: '2024-01-15T10:30:00Z',
+    engagement: {
+      likes: 245,
+      shares: 23,
+      comments: 12,
+      views: 1520,
+    },
+    hashtags: ['marketing', 'socialmedia', 'trends'],
+    createdAt: '2024-01-15T09:00:00Z',
+    updatedAt: '2024-01-15T10:30:00Z',
+    authorId: 'user1',
+  },
+  {
+    id: '2',
+    content:
+      'Behind the scenes: Our team working on the latest app update!',
+    platform: 'instagram',
+    status: 'published',
+    publishedAt: '2024-01-14T14:20:00Z',
+    engagement: {
+      likes: 189,
+      shares: 15,
+      comments: 8,
+      views: 890,
+    },
+    hashtags: ['behindthescenes', 'teamwork', 'app'],
+    createdAt: '2024-01-14T13:00:00Z',
+    updatedAt: '2024-01-14T14:20:00Z',
+    authorId: 'user1',
+  },
+  {
+    id: '3',
+    content:
+      'Tips for better productivity in remote work environments',
+    platform: 'linkedin',
+    status: 'scheduled',
+    scheduledFor: '2024-01-20T09:00:00Z',
+    hashtags: ['productivity', 'remotework', 'tips'],
+    createdAt: '2024-01-12T11:00:00Z',
+    updatedAt: '2024-01-12T11:00:00Z',
+    authorId: 'user1',
+  },
+];
+
+// Helper to find a post by id
+function findPostById(id: string): Post | undefined {
+  return mockPosts.find((post) => post.id === id);
+}
+
 export const postsApi = {
   async getPosts(filters?: PostFilters): Promise<{ data: PostsResponse }> {
     // Always return mock data for demo purposes
@@ -120,21 +177,58 @@ export const postsApi = {
     id: string,
     postData: Partial<UpdatePostData>
   ): Promise<{ data: Post }> {
-    // Return mock updated post
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
           data: {
             id,
-            content: 'Updated content',
-            platform: 'twitter',
-            status: 'published',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            authorId: 'user1',
             ...postData,
-          },
+            updatedAt: new Date().toISOString(),
+          } as Post,
         });
+      }, 200);
+    });
+  },
+
+  async schedulePost(
+    id: string,
+    scheduledAt: string,
+    postData?: Partial<Post>
+  ): Promise<{ data: Post }> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: {
+            id,
+            ...(postData || {}),
+            status: 'scheduled',
+            scheduledFor: scheduledAt,
+            updatedAt: new Date().toISOString(),
+          } as Post,
+        });
+      }, 200);
+    });
+  },
+
+  async publishPost(
+    id: string,
+    postData?: Partial<Post>
+  ): Promise<{ data: Post }> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const existing = findPostById(id);
+        if (!existing) {
+          reject(new Error('Post not found'));
+          return;
+        }
+        const updated: Post = {
+          ...existing,
+          ...postData,
+          status: 'published',
+          publishedAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        resolve({ data: updated });
       }, 200);
     });
   },
@@ -145,46 +239,6 @@ export const postsApi = {
       setTimeout(() => {
         console.log(`Mock delete post ${id}`);
         resolve();
-      }, 200);
-    });
-  },
-
-  async schedulePost(id: string, scheduledAt: string): Promise<{ data: Post }> {
-    // Return mock scheduled post
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          data: {
-            id,
-            content: 'Scheduled content',
-            platform: 'twitter',
-            status: 'scheduled',
-            scheduledFor: scheduledAt,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            authorId: 'user1',
-          },
-        });
-      }, 200);
-    });
-  },
-
-  async publishPost(id: string): Promise<{ data: Post }> {
-    // Return mock published post
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          data: {
-            id,
-            content: 'Published content',
-            platform: 'twitter',
-            status: 'published',
-            publishedAt: new Date().toISOString(),
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            authorId: 'user1',
-          },
-        });
       }, 200);
     });
   },
