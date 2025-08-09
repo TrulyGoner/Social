@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Post, CreatePostData, UpdatePostData, PostFilters } from '../../features/posts/types/post.types';
+import { Post, CreatePostData, UpdatePostData, PostFilters, PostStatus } from '../../features/posts/types/post.types';
 import { postsApi } from '../../services/api/posts.api';
 
 interface PostsState {
@@ -82,6 +82,12 @@ const postsSlice = createSlice({
     },
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
+    },
+    updatePostStatus: (state, action: PayloadAction<{ id: string; status: PostStatus }>) => {
+      const post = state.items.find(p => p.id === action.payload.id);
+      if (post) {
+        post.status = action.payload.status;
+      }
     }
   },
   extraReducers: (builder) => {
@@ -122,7 +128,7 @@ const postsSlice = createSlice({
       .addCase(updatePost.fulfilled, (state, action) => {
         const index = state.items.findIndex(post => post.id === action.payload.id);
         if (index !== -1) {
-          state.items[index] = action.payload;
+          state.items[index] = action.payload; 
         }
       });
 
@@ -135,17 +141,15 @@ const postsSlice = createSlice({
   }
 });
 
-export const { setFilters, clearFilters, setCurrentPage } = postsSlice.actions;
+export const { setFilters, clearFilters, setCurrentPage, updatePostStatus } = postsSlice.actions;
 export default postsSlice.reducer;
 
 // Selectors
 export const selectPosts = (state: { posts: PostsState }) => {
   const { items, filters } = state.posts;
   return items.filter(post => {
-    const matchesSearch = filters.search ? post.content.toLowerCase().includes(filters.search.toLowerCase()) : true;
     const matchesStatus = filters.status ? post.status === filters.status : true;
-    const matchesPlatform = filters.platform ? post.platform === filters.platform : true;
-    return matchesSearch && matchesStatus && matchesPlatform;
+    return matchesStatus; 
   });
 };
 export const selectPostsLoading = (state: { posts: PostsState }) => state.posts.loading;

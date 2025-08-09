@@ -17,7 +17,7 @@ export const SOCIAL_PLATFORMS = {
   TWITTER: 'twitter',
   INSTAGRAM: 'instagram',
   FACEBOOK: 'facebook',
-  LINKEDIN: 'linkedin',
+  VK: 'vk',
 } as const;
 
 export const POST_STATUS = {

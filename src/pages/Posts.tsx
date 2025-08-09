@@ -94,15 +94,12 @@ export const PostsPage: React.FC = () => {
   const platformOptions = [
     { value: '', label: 'All Platforms' },
     { value: SOCIAL_PLATFORMS.TWITTER, label: 'Twitter' },
-    { value: SOCIAL_PLATFORMS.INSTAGRAM, label: 'Instagram' },
     { value: SOCIAL_PLATFORMS.FACEBOOK, label: 'Facebook' },
-    { value: SOCIAL_PLATFORMS.LINKEDIN, label: 'LinkedIn' },
+    { value: SOCIAL_PLATFORMS.VK, label: 'VK' },
   ];
-
   return (
     <Layout>
       <div className="space-y-6">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -118,7 +115,6 @@ export const PostsPage: React.FC = () => {
           </Button>
         </div>
 
-        {/* Filters */}
         <Card className="p-6">
           <div className="flex flex-wrap gap-4 items-center">
             <div className="flex-1 min-w-64">
@@ -168,7 +164,6 @@ export const PostsPage: React.FC = () => {
           </div>
         </Card>
 
-        {/* Posts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {loading ? (
             Array.from({ length: 6 }).map((_, index) => (
@@ -213,7 +208,6 @@ export const PostsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Create Post Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
           <form className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md" onSubmit={handleCreatePostSubmit}>
@@ -232,9 +226,9 @@ export const PostsPage: React.FC = () => {
               required
             >
               <option value="">Select platform</option>
-              {Object.values(SOCIAL_PLATFORMS).map(platform => (
-                <option key={platform} value={platform}>{platform}</option>
-              ))}
+              <option value={SOCIAL_PLATFORMS.VK}>VK</option>
+              <option value={SOCIAL_PLATFORMS.TWITTER}>Twitter</option>
+              <option value={SOCIAL_PLATFORMS.FACEBOOK}>Facebook</option>
             </select>
             <div className="flex justify-end gap-2">
               <button type="button" onClick={handleCloseModal} className="px-4 py-2 border rounded">
